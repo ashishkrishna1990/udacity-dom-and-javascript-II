@@ -22,5 +22,27 @@ const fetchAboutMe = async () => {
 
 fetchAboutMe();
 
+const fetchProjects = async () => {
+    const response = await fetch('./data/projectsData.json');
+    const data = await response.json();
 
+    const projectFragment = document.createDocumentFragment();
+    data.forEach(project => {
+        const projectCard = document.createElement('div');
+        projectCard.classList.add('projectCard');
+        projectCard.id = project.project_id;
+        const imageSrc = project.card_image ? project.card_image.replace(/^\.\.\//, './') : './images/card_placeholder_bg.webp';
+        projectCard.style.backgroundImage = `url(${imageSrc})`;
+        const projectTitle = document.createElement('h4');
+        projectTitle.textContent = project.project_name;
+        const projectDescription = document.createElement('p');
+        projectDescription.textContent = project.short_description ? project.short_description : project.long_description.substring(0, 50) + "...";
+        projectCard.appendChild(projectTitle);
+        projectCard.appendChild(projectDescription);
+        projectFragment.appendChild(projectCard);
+    });
+    document.querySelector("#projectList").appendChild(projectFragment);
+}
+
+fetchProjects();
 

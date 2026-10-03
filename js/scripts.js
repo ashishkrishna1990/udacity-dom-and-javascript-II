@@ -34,6 +34,9 @@ const updateSpotlightSection = (projectData) => {
     const spotlightTitlesFragment = document.createDocumentFragment();
     const imageSrc = projectData.spotlight_image ? projectData.spotlight_image.replace(/^\.\.\//, './') : './images/spotlight_placeholder_bg.webp';
     spotlightSection.style.backgroundImage = `url(${imageSrc})`;
+    spotlightSection.style.backgroundSize = 'cover';
+    spotlightSection.style.backgroundPosition = 'center';
+    spotlightSection.style.backgroundRepeat = 'no-repeat';
     const projectTitle = document.createElement('h3');
     projectTitle.textContent = projectData.project_name;
     const projectDescription = document.createElement('p');
@@ -97,4 +100,36 @@ const fetchProjects = async () => {
 
 fetchProjects();
 
+const formSection = document.querySelector('#contactContainer');
+const emailInput = document.querySelector("#contactEmail");
+const messageInput = document.querySelector("#contactMessage");
+const emailError = document.querySelector("#emailError");
+const messageError = document.querySelector("#messageError");
+const charactersLeft = document.querySelector("#charactersLeft");
+
+formSection.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (emailInput.value === "" || messageInput.value === "") {
+        alert("Please fill in all fields");
+    } else if (messageInput.value.length > 300) {
+        alert("Message must be less than 300 characters");
+    } else if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        alert("Please enter a valid email");
+    } else if (messageInput.value.match(/[^a-zA-Z0-9@._-]/) || emailInput.value.match(/[^a-zA-Z0-9@._-]/)) {
+        alert("Special characters are not allowed in the message")
+    }
+    else {
+        alert("Form submitted successfully");
+        formSection.reset();
+    }
+});
+
+messageInput.addEventListener("input", () => {
+    charactersLeft.textContent = `Characters: ${messageInput.value.length}/300`;
+    if (messageInput.value.length > 300) {
+        charactersLeft.style.color = "red";
+    } else {
+        charactersLeft.style.color = "black";
+    }
+});
 

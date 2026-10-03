@@ -41,7 +41,27 @@ const fetchProjects = async () => {
         projectCard.appendChild(projectDescription);
         projectFragment.appendChild(projectCard);
     });
-    document.querySelector("#projectList").appendChild(projectFragment);
+    const projectList = document.querySelector("#projectList")
+    projectList.appendChild(projectFragment);
+
+    const scrollArrowLeft = document.querySelector('#projectNavArrows > span.arrow-left');
+    const scrollArrowRight = document.querySelector('#projectNavArrows > span.arrow-right');
+    const isDesktop = window.matchMedia('(min-width: 1024px)');
+
+    scrollArrowLeft.addEventListener('click', () => {
+        if (isDesktop.matches) {
+            projectList.scrollBy({ top: -200, behavior: 'smooth' });
+        } else {
+            projectList.scrollBy({ left: -200, behavior: 'smooth' });
+        }
+    });
+    scrollArrowRight.addEventListener('click', () => {
+        if (isDesktop.matches) {
+            projectList.scrollBy({ top: 200, behavior: 'smooth' });
+        } else {
+            projectList.scrollBy({ left: 200, behavior: 'smooth' });
+        }
+    });
 }
 
 fetchProjects();

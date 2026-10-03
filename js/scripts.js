@@ -134,9 +134,9 @@ formSection.addEventListener("submit", (event) => {
 messageInput.addEventListener("input", () => {
     charactersLeft.textContent = `Characters: ${messageInput.value.length}/300`;
     if (messageInput.value.length > 300) {
-        charactersLeft.style.color = "red";
+        charactersLeft.style.color = "var(--error)";
     } else {
-        charactersLeft.style.color = "black";
+        charactersLeft.style.color = null;
     }
 });
 

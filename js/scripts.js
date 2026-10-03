@@ -109,18 +109,25 @@ const charactersLeft = document.querySelector("#charactersLeft");
 
 formSection.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (emailInput.value === "" || messageInput.value === "") {
-        alert("Please fill in all fields");
+    if (emailInput.value === "") {
+        emailError.textContent = "Please enter your email address";
+    } else if (messageInput.value === "") {
+        messageError.textContent = "Please enter your message";
     } else if (messageInput.value.length > 300) {
-        alert("Message must be less than 300 characters");
+        messageError.textContent = "Message must be less than 300 characters";
     } else if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        alert("Please enter a valid email");
-    } else if (messageInput.value.match(/[^a-zA-Z0-9@._-]/) || emailInput.value.match(/[^a-zA-Z0-9@._-]/)) {
-        alert("Special characters are not allowed in the message")
+        emailError.textContent = "Please enter a valid email";
+    } else if (emailInput.value.match(/[^a-zA-Z0-9@._-]/)) {
+        emailError.textContent = "Special characters are not allowed in the email";
+    } else if (messageInput.value.match(/[^a-zA-Z0-9@._-]/)) {
+        messageError.textContent = "Special characters are not allowed in the message";
     }
     else {
-        alert("Form submitted successfully");
-        formSection.reset();
+        alert("Form validation has passed and message has been submitted successfully");
+        emailInput.value = "";
+        messageInput.value = "";
+        emailError.textContent = "";
+        messageError.textContent = "";
     }
 });
 
